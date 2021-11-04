@@ -35,6 +35,14 @@ class Blog_model extends CI_Model
         $query = $this->db->get();        
         return $query->result();
     }
+    function getCommentCount($id)
+    {
+        $this->db->select('count(*) as asd');
+        $this->db->from('tbl_comments');
+        $this->db->where('blog_id', $id);
+        $query = $this->db->get();        
+        return $query->result();
+    }
 
 	function saveBlog($blogInfo)
     {
@@ -67,5 +75,23 @@ class Blog_model extends CI_Model
         $this->db->delete('tbl_blog_list');
         
         return TRUE;
+    }
+
+	// get full tree comments based on blog id
+    function get_all_tree($blog_id) {
+        $result = $this->db->query("SELECT * FROM tbl_comments where blog_id = $blog_id")->result_array();
+        foreach ($result as $row) {
+            $data[] = $row;
+        }
+        return $data;
+    }
+
+    // to get child comments by entry id and parent id and blog id
+    function get_tree_by_parent($blog_id,$parent_id) {
+        $result = $this->db->query("SELECT * FROM tbl_comments where parent_id = $parent_id AND  blog_id = $blog_id")->result_array();
+        foreach ($result as $row) {
+            $data[] = $row;
+        }
+        return $data;
     }
 }
