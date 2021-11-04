@@ -27,6 +27,14 @@ class Blog_model extends CI_Model
         $query = $this->db->get();        
         return $query->result();
     }
+    function getComments($id)
+    {
+        $this->db->select('*');
+        $this->db->from('tbl_comments');
+        $this->db->where('blog_id', $id);
+        $query = $this->db->get();        
+        return $query->result();
+    }
 
 	function saveBlog($blogInfo)
     {
@@ -34,6 +42,15 @@ class Blog_model extends CI_Model
         $this->db->insert('tbl_blog_list', $blogInfo);        
         $insert_id = $this->db->insert_id();        
         $this->db->trans_complete();        
+        return $insert_id;
+    }
+
+	function saveComment($commentInfo)
+    {
+        $this->db->trans_start();
+        $this->db->insert('tbl_comments', $commentInfo);
+        $insert_id = $this->db->insert_id();
+        $this->db->trans_complete();
         return $insert_id;
     }
 	

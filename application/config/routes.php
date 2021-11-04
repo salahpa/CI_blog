@@ -54,6 +54,7 @@ $route['404_override'] = '';
 $route['translate_uri_dashes'] = FALSE;
 
 $route['single_blog/(:any)'] = 'Blog/single/$1';
+$route['add_comment'] = 'Blog/add_comment';
 
 $route['manage_blog'] = 'manage_blog/ManageBlog_controller/dashboard';
 $route['add_blog'] = 'manage_blog/ManageBlog_controller/add_blog';
